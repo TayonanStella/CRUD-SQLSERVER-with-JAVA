@@ -1,7 +1,6 @@
 package VIEW;
 
 import DAO.ConexionDAO;
-import java.awt.Component;
 import java.sql.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +9,16 @@ import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Component;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class MenuView extends javax.swing.JFrame {
 
@@ -34,8 +40,6 @@ public class MenuView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         decancel = new com.toedter.calendar.JDateChooser();
         hastacancel = new com.toedter.calendar.JDateChooser();
-        deconsul = new com.toedter.calendar.JDateChooser();
-        hastaconsul = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -45,6 +49,7 @@ public class MenuView extends javax.swing.JFrame {
         idfactura = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -119,6 +124,13 @@ public class MenuView extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Export");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,18 +141,19 @@ public class MenuView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cancelados, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(4, 4, 4)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(hastacancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(decancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(cancelados, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rmcancelados, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(decancel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(11, 11, 11))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(hastacancel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(rmcancelados, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(refolio, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,11 +170,14 @@ public class MenuView extends javax.swing.JFrame {
                                 .addComponent(idfactura, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deconsul, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(consultafinal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hastaconsul, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(consultafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(jButton4)))
+                        .addGap(0, 84, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -169,6 +185,11 @@ public class MenuView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(consultafinal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -178,33 +199,22 @@ public class MenuView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(decancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(refolio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(refolio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(decancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hastacancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rmcancelados))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(numcheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(numcheq)
-                                    .addComponent(idfactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(consultafinal)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(numcheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(numcheq)
+                                .addComponent(idfactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hastacancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deconsul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hastaconsul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                        .addComponent(rmcancelados)))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -238,6 +248,10 @@ public class MenuView extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         facturasconsulta();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        export();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,13 +292,12 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JButton cancelados;
     private javax.swing.JButton consultafinal;
     private com.toedter.calendar.JDateChooser decancel;
-    private com.toedter.calendar.JDateChooser deconsul;
     private com.toedter.calendar.JDateChooser hastacancel;
-    private com.toedter.calendar.JDateChooser hastaconsul;
     private javax.swing.JTextField idfactura;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -393,11 +406,11 @@ public class MenuView extends javax.swing.JFrame {
     }
 
     public void queryfinal() {
-        SimpleDateFormat dateFormatde = new SimpleDateFormat("yyyy-MM-dd");
-        String deconsuldate = dateFormatde.format(deconsul.getDate());
+        SimpleDateFormat dateFormatde = new SimpleDateFormat("yyyy/MM/dd");
+        String deconsuldate = dateFormatde.format(decancel.getDate());
 
-        SimpleDateFormat dateFormathast = new SimpleDateFormat("yyyy-MM-dd");
-        String hastaconsuldate = dateFormathast.format(hastaconsul.getDate());
+        SimpleDateFormat dateFormathast = new SimpleDateFormat("yyyy/MM/dd");
+        String hastaconsuldate = dateFormathast.format(hastacancel.getDate());
 
         String sql = "Select\n"
                 + "    \n"
@@ -531,7 +544,7 @@ public class MenuView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.err.println("Erro ao executar a consulta: " + ex.getMessage());
         }
-
+        chequesconsulta();
     }
 
     private void chequesconsulta() {
@@ -542,7 +555,7 @@ public class MenuView extends javax.swing.JFrame {
         SimpleDateFormat dateFormathast = new SimpleDateFormat("yyyy-MM-dd");
         String hastaconsuldate = dateFormathast.format(hastacancel.getDate());
 
-        String sql = "Select * from cheques WHERE fecha >= '" + deconsuldate + "' AND fecha <= '" + hastaconsuldate + "';";
+        String sql = "Select * from cheques WHERE fecha >= '" + deconsuldate + " 00:00:00' AND fecha <= '" + hastaconsuldate + " 23:59:59';";
         System.out.println(sql);
         try {
             PreparedStatement st = con.prepareStatement(sql);
@@ -633,6 +646,7 @@ public class MenuView extends javax.swing.JFrame {
         try {
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
+            facturasconsulta();
 
         } catch (SQLException error) {
 
@@ -641,7 +655,14 @@ public class MenuView extends javax.swing.JFrame {
     }
 
     private void facturasconsulta() {
-        String sql = "select * from facturas;";
+
+        SimpleDateFormat dateFormatde = new SimpleDateFormat("yyyy/MM/dd");
+        String defactdate = dateFormatde.format(decancel.getDate());
+
+        SimpleDateFormat dateFormathast = new SimpleDateFormat("yyyy/MM/dd");
+        String hastafactdate = dateFormathast.format(hastacancel.getDate());
+
+        String sql = "select * from facturas WHERE fecha >= '" + defactdate + " 00:00:00' AND fecha <= '" + hastafactdate + " 23:59:59';";
         System.out.println(sql);
         try {
             PreparedStatement st = con.prepareStatement(sql);
@@ -701,4 +722,134 @@ public class MenuView extends javax.swing.JFrame {
         }
     }
 
+    public void status() {
+    
+    new Thread(() -> {
+      
+        JDialog dialog = new JDialog((JFrame)null, "Carregando...");
+        JLabel label = new JLabel("Por favor, aguarde...", JLabel.CENTER);
+        dialog.add(label);
+        dialog.setSize(200, 100);
+        dialog.setLocationRelativeTo(null);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setModal(true);
+
+      
+        dialog.setVisible(true);
+
+       
+
+      
+        dialog.dispose();
+        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }).start();
+}
+
+    private void export() {
+        
+        SimpleDateFormat dateFormatde = new SimpleDateFormat("yyyy/MM/dd");
+    String defactdate = dateFormatde.format(decancel.getDate());
+
+    SimpleDateFormat dateFormathast = new SimpleDateFormat("yyyy/MM/dd");
+    String hastafactdate = dateFormathast.format(hastacancel.getDate());
+
+    String sql = "select * from facturas WHERE fecha >= '" + defactdate + " 00:00:00' AND fecha <= '" + hastafactdate + " 23:59:59';";
+    System.out.println(sql);
+    try {
+        PreparedStatement st = con.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+
+        // Obtenha metadados
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+
+        // Crie um array para os nomes das colunas
+        String[] columnNames = new String[columnCount];
+        for (int i = 1; i <= columnCount; i++) {
+            columnNames[i - 1] = rsmd.getColumnName(i);
+        }
+
+        // Crie o modelo da tabela com os nomes das colunas
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        table.setModel(model);
+
+        // Adicione linhas à tabela
+        while (rs.next()) {
+            Object[] row = new Object[columnCount];
+            for (int i = 1; i <= columnCount; i++) {
+                row[i - 1] = rs.getObject(i);
+            }
+            model.addRow(row);
+        }
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            TableColumn tableColumn = table.getColumnModel().getColumn(column);
+            tableColumn.setMinWidth(100);
+        }
+
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            TableColumn tableColumn = table.getColumnModel().getColumn(column);
+            int preferredWidth = tableColumn.getMinWidth();
+            int maxWidth = tableColumn.getMaxWidth();
+
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer cellRenderer = table.getCellRenderer(row, column);
+                Component c = table.prepareRenderer(cellRenderer, row, column);
+                int width = c.getPreferredSize().width + table.getIntercellSpacing().width;
+                preferredWidth = Math.max(preferredWidth, width);
+
+                if (preferredWidth >= maxWidth) {
+                    preferredWidth = maxWidth;
+                    break;
+                }
+            }
+
+            tableColumn.setPreferredWidth(preferredWidth);
+        }
+
+        /*table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
+
+        // Cria um novo workbook e uma nova planilha
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Facturas");
+
+        // Adicione os nomes das colunas à primeira linha da planilha
+        Row headerRow = sheet.createRow(0);
+        for (int i = 1; i <= columnCount; i++) {
+            Cell cell = headerRow.createCell(i - 1);
+            cell.setCellValue(rsmd.getColumnName(i));
+        }
+
+        // Adicione as linhas de dados à planilha
+        int rowNum = 1;
+        rs.beforeFirst(); // Volta o cursor do ResultSet para o início
+        while (rs.next()) {
+            Row row = sheet.createRow(rowNum++);
+            for (int i = 1; i <= columnCount; i++) {
+                Cell cell = row.createCell(i - 1);
+                cell.setCellValue(rs.getObject(i).toString());
+            }
+        }
+
+        // Escreva o workbook em um arquivo
+        try (FileOutputStream fileOut = new FileOutputStream("facturas.xlsx")) {
+            workbook.write(fileOut);
+        }
+
+        // Fecha o workbook
+        workbook.close();
+*/
+    } catch (SQLException ex) {
+        System.err.println("Erro ao executar a consulta ou escrever o arquivo: " + ex.getMessage());
+    }
+}
+
+
+    
+
+    
 }

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class PortDao {
     String portcon;
     public String portcon(){
-        Path location = Paths.get("C:\\port.txt");
+        Path location = Paths.get("c:\\port.txt");
 
         try {
             byte[] text = Files.readAllBytes(location);
