@@ -16,9 +16,15 @@ public class ConexionDAO {
         try {
             
 
+<<<<<<< HEAD
             String url = "jdbc:jtds:sqlserver://localhost:"+portcon+"/softrestaurant10;instance=SQLEXPRESS;useLOBs=false";
 
             con = DriverManager.getConnection(url, "sa", "National09");
+=======
+            String url = "jdbc:jtds:sqlserver://localhost:"+portcon+"/test;instance=SQLEXPRESS;useLOBs=false";
+
+            con = DriverManager.getConnection(url, "sa", "1234");
+>>>>>>> fa19ba247d561a4c61d3d11ae2547fc59bcc90b5
            
         } catch (SQLException msg) {
             JOptionPane.showMessageDialog(null, "Conecction SQL Server failed");
